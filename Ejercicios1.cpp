@@ -18,13 +18,22 @@ struct doctor
   struct paciente *proximo;
 };
 
+struct historial_paciente {
+    char enfemerdad[50];
+    char estado[50];
+    struct historial_paciente * sgte;
+};
 typedef struct paciente *TPaciente;
 typedef struct doctor *TDoctor;
+typedef struct historial_paciente *THistorial;
 
 void insertar(TDoctor &lista,char nombre[], char especialidad[]);
 void imprimir(TDoctor lista);
 void ingresaPacientes(TDoctor lista);
 void buscarDoctor(TDoctor lista,char nombre[], char especialidad[]);
+
+void ingreseHistorial(TDoctor lista);
+
 int main()
 {
 	TDoctor listaDoctor=NULL;
@@ -45,7 +54,9 @@ int main()
 	cout<<"=================="<<endl;
 	cout<<"Que especialista desea buscar? ";cin>>nombre;
 	cout<<"Cual es la especialidad a buscar? ";cin>>especialidad;
+	
 	buscarDoctor(listaDoctor,nombre, especialidad);
+	ingreseHistorial(listaDoctor);
 	return 0;
 }
 
@@ -63,6 +74,7 @@ void imprimir(TDoctor lista)
 {
 	TDoctor tmp = lista;
 	TPaciente tmpPaciente=NULL;
+	THistorial tmpHistorial = NULL;
 	while(tmp)
 	{
 		cout<<"el especialista es "<<tmp->nombre<<endl;
@@ -71,6 +83,12 @@ void imprimir(TDoctor lista)
 		{
 			cout<<"el paciente es "<<tmpPaciente->nombre<<endl;
 			tmpPaciente = tmpPaciente->sgte;
+		}	while(tmpHistorial)
+		{
+		    cout<<"Este es el historial medico del paciente"<<tmpHistorial->enfemerdad<<endl;
+		    cout<<"El estado del paciente sera"<<tmpHistorial->estado<<endl;
+		    tmpHistorial = tmpHistorial->sgte;
+		    tmpHistorial = tmpHistorial->sgte;
 		}
 		tmp = tmp->sgte;
 	}
@@ -96,10 +114,26 @@ void ingresaPacientes(TDoctor lista)
 	}
 }
 
+void ingreseHistorial(TDoctor lista){
+    int np;
+    TDoctor tmp = lista;
+    THistorial historial_paciente = NULL;
+
+    while(tmp){
+        cout<<"Ingrese su historial medico por favor"<<endl;
+       historial_paciente = new(struct historial_paciente);
+       cout<<"El historial medico es:"<<endl;
+       cin>>historial_paciente->enfemerdad;
+       cin>>historial_paciente->estado;
+    }
+    tmp = tmp -> sgte;
+}
+
 void buscarDoctor(TDoctor lista,char nombre[], char especialidad[])
 {
 	TDoctor tmp = lista;
 	TPaciente tmpPaciente=NULL;
+	THistorial tmpHistorial= NULL;
 	while(tmp)
 	{
 		if(!strcmp(tmp->nombre,nombre))
@@ -110,6 +144,12 @@ void buscarDoctor(TDoctor lista,char nombre[], char especialidad[])
 			{
 				cout<<"Estos son las pacientes asignados: "<<tmpPaciente->nombre<<endl;
 				tmpPaciente = tmpPaciente->sgte;
+			}
+			while(tmpHistorial){
+			    cout<<"Este es el historial de los pacientes:"<<tmpHistorial->enfemerdad<<endl;
+			        cout<<"Su estado sera:"<<tmpHistorial->estado<<endl;
+			    tmpHistorial = tmpHistorial->sgte;
+			    
 			}
 			return;
 		}else if(!strcmp(tmp->especialidad,especialidad))
@@ -122,7 +162,13 @@ void buscarDoctor(TDoctor lista,char nombre[], char especialidad[])
 				tmpPaciente = tmpPaciente->sgte;
 			}
 			return;
-		}
+		}	while(tmpHistorial){
+			    cout<<"Este es el historial de los pacientes:"<<tmpHistorial->enfemerdad<<endl;
+			        cout<<"Su estado sera:"<<tmpHistorial->estado<<endl;
+			    tmpHistorial = tmpHistorial->sgte;
+			    
+			}
+			return;
 		tmp = tmp->sgte;
 	}
 	if(tmp==NULL){
