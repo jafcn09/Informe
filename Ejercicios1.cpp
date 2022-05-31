@@ -16,11 +16,13 @@ struct doctor
   char especialidad[100];
   struct doctor *sgte;
   struct paciente *proximo;
+  struct carga * historial_paciente;
 };
 
 struct historial_paciente {
     char enfemerdad[50];
     char estado[50];
+    char tratamientos[50];
     struct historial_paciente * sgte;
 };
 typedef struct paciente *TPaciente;
@@ -87,6 +89,7 @@ void imprimir(TDoctor lista)
 		{
 		    cout<<"Este es el historial medico del paciente"<<tmpHistorial->enfemerdad<<endl;
 		    cout<<"El estado del paciente sera"<<tmpHistorial->estado<<endl;
+		       cout<<"Que tratamiento desea aplicar"<<tmpHistorial->tratamientos<<endl;
 		    tmpHistorial = tmpHistorial->sgte;
 		    tmpHistorial = tmpHistorial->sgte;
 		}
@@ -120,15 +123,21 @@ void ingreseHistorial(TDoctor lista){
     THistorial historial_paciente = NULL;
 
     while(tmp){
-        cout<<"Ingrese su historial medico por favor"<<endl;
+       cout<<"Historial medico de los pacientes asignados"<<tmp->historial_paciente<<":";cin>>np;
+        for(int i=0;i<np;i++) {
        historial_paciente = new(struct historial_paciente);
-       cout<<"El historial medico es:"<<endl;
+       cout<<"Su enfermedad es:"<<endl;
        cin>>historial_paciente->enfemerdad;
+    tmp->historial_paciente;
+       cout<<"El estado del paciente es:"<<endl;
        cin>>historial_paciente->estado;
+       cout<<"¿Que tratamientos aplico?"<<endl;
+            cin>>historial_paciente->tratamientos;
     }
     tmp = tmp -> sgte;
 }
 
+}
 void buscarDoctor(TDoctor lista,char nombre[], char especialidad[])
 {
 	TDoctor tmp = lista;
@@ -148,6 +157,7 @@ void buscarDoctor(TDoctor lista,char nombre[], char especialidad[])
 			while(tmpHistorial){
 			    cout<<"Este es el historial de los pacientes:"<<tmpHistorial->enfemerdad<<endl;
 			        cout<<"Su estado sera:"<<tmpHistorial->estado<<endl;
+			         cout<<"El tratamiento aplicado es:"<<tmpHistorial->tratamientos<<endl;
 			    tmpHistorial = tmpHistorial->sgte;
 			    
 			}
@@ -165,11 +175,11 @@ void buscarDoctor(TDoctor lista,char nombre[], char especialidad[])
 		}	while(tmpHistorial){
 			    cout<<"Este es el historial de los pacientes:"<<tmpHistorial->enfemerdad<<endl;
 			        cout<<"Su estado sera:"<<tmpHistorial->estado<<endl;
+			               cout<<"Su estado sera:"<<tmpHistorial->tratamientos<<endl;
 			    tmpHistorial = tmpHistorial->sgte;
 			    
 			}
 			return;
-		tmp = tmp->sgte;
 	}
 	if(tmp==NULL){
 		cout<<"No hemos podido encontrar el nombre del especialista "<<nombre<<endl;
