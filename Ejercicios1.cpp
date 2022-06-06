@@ -162,21 +162,26 @@ void ingreseHistorial(Doctor lista){
 		tmp = tmp -> sgte;
 	}
 }
-void buscarDoctor(Doctor lista, char nombre[], char especialidad[]){
-	Doctor tmp = lista;
-	Paciente tmpPaciente = NULL;
+
+
+
+void buscarDoctor(Doctor lista,char nombre[], char especialidad[])
+{
+    Doctor tmp = lista;
+	Paciente tmpPaciente=NULL;
 	Historial tmpHistorial = NULL;
-
-	while (tmp){
-		if (!strcmp(tmp -> nombre, nombre)){
-			cout << ">>> El nombre del especialista es: " << tmp -> nombre << endl;
+	while(tmp)
+	{
+		if(!strcmp(tmp->nombre,nombre))
+		{
+		cout << ">>> El nombre del especialista es: " << tmp -> nombre << endl;
 			tmpPaciente = tmp -> proximo;
-
-			while (tmpPaciente){
-				cout << ">>> Los pacientes asignados son: " << tmpPaciente -> nombre << endl;
+			while(tmpPaciente)
+			{
+			cout << ">>> Los pacientes asignados son: " << tmpPaciente -> nombre << endl;
 				tmpPaciente = tmpPaciente->sgte;
 			}
-
+			
 			while (tmpHistorial){
 			    cout << ">>>El Historial del paciente: " << tmpPaciente -> nombre << endl;
 				cout << ">>>¿La enfermedad del paciente es? : " << tmpHistorial -> enfemerdad << endl;
@@ -186,29 +191,13 @@ void buscarDoctor(Doctor lista, char nombre[], char especialidad[]){
 			}
 			return;
 		}
-
-		else if (!strcmp(tmp -> especialidad, especialidad)){
-			cout << ">>> La especialidad del doctor es: " << tmp -> especialidad << endl;
-			tmpPaciente = tmp -> proximo;
-
-			while (tmpPaciente){
-				cout << ">>> Los pacientes asignados son: " << tmpPaciente->nombre << endl;
-				tmpPaciente = tmpPaciente -> sgte;
-			}
-				while (tmpHistorial){
-			cout << ">>> El historial de los pacientes son: " << tmpHistorial -> enfemerdad << endl;
-			cout << ">>> El estado del paciente es: " << tmpHistorial -> estado << endl;
-			cout << ">>> El tratamiento aplicado es: " << tmpHistorial -> tratamientos << endl;
-			tmpHistorial = tmpHistorial -> sgte;
-		}
-			
-			return;
-		}
-
-
-	if (tmp == NULL){
-		cout << " ---> No hemos podido encontrar el nombre del especialista " << nombre << endl;
+		tmp = tmp->sgte;
+	if(tmp==NULL)
+	{
+	    cout << " ---> No hemos podido encontrar el nombre del especialista " << nombre << endl;
 		cout << " ---> No hemos podido encontrar  su especialidad" << especialidad << endl;
+	    
+	    
 	}
-	}
+}
 }
