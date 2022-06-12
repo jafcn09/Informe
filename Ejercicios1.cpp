@@ -15,6 +15,9 @@ struct doctor{
 	struct doctor *sgte;
 	struct paciente *proximo;
 	struct carga *historialPaciente;
+	struct  habita *camadisponible;
+	struct lote    *farmacia;
+	
 };
 
 struct historialPaciente{
@@ -23,10 +26,25 @@ struct historialPaciente{
 	char tratamientos[50];
 	struct historialPaciente *sgte;
 };
+struct camadisponible{
+    char cantidad[50];
+    char ubicacion[50];
+    char nombre_cama[50];
+    struct camadisponible *sgte;
+};
+struct  farmacia{
+      char codigo_medicamento[50];
+      char tipo_medicamento[50];
+     char cantidades[50];
+     char estado_medicamento[50];
+     struct farmacia *sgte;
+};
 
 typedef struct paciente *Paciente;
 typedef struct doctor *Doctor;
 typedef struct historialPaciente *Historial;
+typedef  struct camadisponible  *Camas;
+typedef  struct  farmacia   *Farmacos;
 
 void insertar(Doctor &lista, char nombre[], char especialidad[]){
 	Doctor nuevo = new (struct doctor);
