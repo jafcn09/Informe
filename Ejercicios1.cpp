@@ -15,8 +15,8 @@ struct doctor{
 	struct doctor *sgte;
 	struct paciente *proximo;
 	struct carga *historialPaciente;
-	struct  habita *camadisponible;
-	struct lote    *farmacia;
+	struct  camadisponible *habita;
+	struct farmacia * lote;
 	
 };
 
@@ -33,9 +33,10 @@ struct camadisponible{
     struct camadisponible *sgte;
 };
 struct  farmacia{
+         char cantidades[50];
       char codigo_medicamento[50];
       char tipo_medicamento[50];
-     char cantidades[50];
+
      char estado_medicamento[50];
      struct farmacia *sgte;
 };
@@ -110,11 +111,80 @@ void ingreseHistorial(Doctor lista){
 	}
 }
 
+
+void ingreseCamas(Doctor lista){
+    	int np;
+	Doctor tmp = lista;
+	Camas camadisponible = NULL;
+
+	while (tmp){
+		cout << "\n>>> Estas son las camas disponibles,  generadas para el especialista [" << tmp -> nombre <<"]: ";
+		cin >> np;
+		cout << endl;
+
+		for (int i = 0; i < np; i++){
+			camadisponible = new (struct camadisponible);
+			
+			cout << " ---> Numero de cama" << i + 1 << ": ";
+			cin >> camadisponible -> cantidad;
+			cout << " ---> La cama del hospital queda [" << i + 1 << "]:";
+			cin >> camadisponible -> ubicacion;
+
+			cout << " ---> El nombre de la cama del hospital es [" << i + 1 << "]: ";
+			cin >> camadisponible -> nombre_cama;
+			
+
+		}
+		tmp = tmp -> sgte;
+	}
+	cout << endl;
+	
+	cout << "  ";
+
+	cout << " Camas(s) registrada(s) correctamente.";
+	cout << endl;
+    
+}
+void ingreseFarmacos(Doctor lista){
+    int np;
+    Doctor tmp = lista;
+    Farmacos farmacia = NULL;
+    while (tmp){
+		cout << "\n>>> Ingrese la cantidad de farmacos [" << tmp << "]: ";
+		cin >> np;
+		cout << endl;
+
+		for (int i = 0; i < np; i++){
+			farmacia = new (struct farmacia);
+			
+			cout << " ---> El código del medicamento" << i + 1 << ": es ";
+			cin >> farmacia -> codigo_medicamento;
+			cout << " ---> nombre del medicamento [" << i + 1 << "]: es";
+			cin >> farmacia -> tipo_medicamento;
+
+			cout << " ---> El estado del medicamento [" << i + 1 << "]:  es ";
+			cin >> farmacia -> estado_medicamento;
+			
+
+		}
+		tmp = tmp -> sgte;
+	}
+	cout << endl;
+	
+	cout << "  ";
+
+	cout << " Los medicamentos  se registraron correctamente.";
+	cout << endl;
+    
+    
+    
+}
+
 void buscarDoctor(Doctor lista, char nombre[], char especialidad[]){
 	Doctor tmp = lista;
 	Paciente tmpPaciente = NULL;
 	Historial tmpHistorial = NULL;
-
+    Farmacos tmpFarmacos = NULL;
 	while (tmp){
 		if (!strcmp(tmp -> nombre, nombre)){
 			
@@ -169,6 +239,8 @@ void imprimir(Doctor lista){
 	Doctor tmp = lista;
 	Paciente tmpPaciente = NULL;
 	Historial tmpHistorial = NULL;
+	Camas  tmpCamas = NULL;
+	Farmacos tmpFarmacos = NULL;
 
 	while (tmp){
 
@@ -177,18 +249,30 @@ void imprimir(Doctor lista){
 		cout << endl;
 		cout << ">>> El especialista es: " << tmp -> nombre << endl;
 		tmpPaciente = tmp -> proximo;
+		tmpCamas = tmp -> habita;
+		tmpFarmacos = tmp -> lote;
 		cout << endl;
 		
-		while (tmpPaciente){
+		if (tmpPaciente){
 			cout << ">>> El paciente [" << i++ + 1 << "] es: " << tmpPaciente -> nombre << endl;
 			tmpPaciente = tmpPaciente -> sgte;
 		}
 
-		while (tmpHistorial){
+		else if (tmpHistorial){
 			cout << ">>> El historial del paciente medico es: " << tmpHistorial -> enfemerdad << endl;
 			cout << ">>> El estado del paciente es: " << tmpHistorial -> estado << endl;
 			cout << ">>> El tratamiento del paciente es: " << tmpHistorial -> tratamientos << endl;
 			tmpHistorial = tmpHistorial -> sgte;
+		}
+		else if(tmpCamas){
+		    	cout << ">>> La cantidad de cama disponible[" << i++ + 1 << "] es: " << tmpCamas -> cantidad << endl;
+		    	
+			tmpCamas = tmpCamas -> sgte;
+		    
+		}else if(tmpFarmacos){
+		    
+		    cout << ">>> La cantidad de medicamentos registrados[" << i++ + 1 << "] es: " << tmpFarmacos -> cantidades << endl;
+		    tmpFarmacos = tmpFarmacos -> sgte;
 		}
 		
 		return;
@@ -239,7 +323,8 @@ int main(){
 	buscarDoctor(listaDoctor, nombre, especialidad);
 	
 	ingreseHistorial(listaDoctor);
-
+    ingreseCamas(listaDoctor);
+    ingreseFarmacos(listaDoctor);
 	cout << endl;
 	cout << "  ";
 	
@@ -249,7 +334,11 @@ int main(){
 	cout << "\n===========================================\n";
 	cout << "\tRegistro medico y paciente";
 	cout << "\n===========================================\n";
-
+cout << "\tRegistro de camas disponibles en el hispotial";
+	cout << "\n===========================================\n";
+	
+	cout << "\tRegistro de medicamento disponible";
+	cout << "\n===========================================\n";
 	imprimir(listaDoctor);
 
 	cout << "\n===========================================\n";
