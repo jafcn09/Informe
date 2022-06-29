@@ -100,13 +100,14 @@ void ingreseHistorial(Doctor lista){
 
 	while (tmp){
 		Sleep(1000);
-		cout << ">>> Ingrese el numero de historial medico, recuerde que su medico es [" << tmp-> nombre<< "]: ";
-		cin >> np;
 		cout << endl;
+		cout << ">>> Ingrese el numero de historial medico, recuerde que su medico es [" << tmp -> nombre << "]: ";
+		cin >> np;
 		
 		for (int i = 0; i < np; i++){
 			historialPaciente = new (struct historialPaciente);
 
+			cout << endl;
 			cout << " ---> Historial [" << i + 1 << "]: La enfermedad del paciente es: ";
 			cin >> historialPaciente -> enfemerdad;
 
@@ -135,12 +136,14 @@ void ingreseHistorial(Doctor lista){
 
 void ingreseCamas(Doctor lista){
     int np;
+	int i = 0;
 	Doctor tmp = lista;
+	Paciente tmpPaciente = NULL;
 	Camas camadisponible = NULL;
 
 	while (tmp){
 		cout << endl;
-		cout << "\n>>> Ingrese la cantidad de habitaciones para las camas disponibles, generadas para el paciente: ";
+		cout << "\n>>> Ingrese la cantidad de habitaciones para las camas disponibles, generadas para los pacientes del doctor [" << i++ +1 << "]: ";
 		cin >> np;
 		cout << endl;
 
@@ -172,18 +175,18 @@ void ingreseCamas(Doctor lista){
 }
 void ingreseMedicamentos(Doctor lista){
     int np;
+	int i = 0;
     Doctor tmp = lista;
     Medicamentos farmacia = NULL;
 	
     while (tmp){
-		cout << endl;
-		cout << "\n>>> Ingrese la cantidad de medicamentos para el paciente: ";
+		cout << "\n>>> Ingrese la cantidad de medicamentos para los pacientes del doctor [" << i++ +1 << "]: ";
 		cin >> np;
-		cout << endl;
 
 		for (int i = 0; i < np; i++){
 			farmacia = new (struct farmacia);
 
+			cout << endl;
 			cout << " ---> El codigo del medicamento [" << i + 1 << "] es: ";
 			cin >> farmacia -> codigo_medicamento;
 			cout << " ---> nombre del medicamento [" << i + 1 << "] es: ";
@@ -285,24 +288,6 @@ void imprimir(Doctor lista){
 			cout << ">>> El paciente [" << i++ + 1 << "] es: " << tmpPaciente -> nombre << endl;
 			tmpPaciente = tmpPaciente -> sgte;
 		}
-
-		if (tmpHistorial){
-			cout << ">>> El historial del paciente medico es: " << tmpHistorial -> enfemerdad << endl;
-			cout << ">>> El estado del paciente es: " << tmpHistorial -> estado << endl;
-			cout << ">>> El tratamiento del paciente es: " << tmpHistorial -> tratamientos << endl;
-			tmpHistorial = tmpHistorial -> sgte;
-		}
-
-		if (tmpCamas){
-			cout << ">>> La cantidad de cama disponible[" << i++ + 1 << "] es: " << tmpCamas -> cantidad << endl;
-			tmpCamas = tmpCamas -> sgte;
-		    
-		}
-		
-		if (tmpMedicamentos){
-		    cout << ">>> La cantidad de medicamentos registrados[" << i++ + 1 << "] es: " << tmpMedicamentos -> cantidades << endl;
-		    tmpMedicamentos = tmpMedicamentos -> sgte;
-		}
 		
 		return;
 	}
@@ -368,29 +353,11 @@ int main(){
 	cout << " Imprimiendo datos, espere un momento...";Sleep(2000);
 	cout << endl;
 
-	cout << "\n===========================================\n";
+	cout << "\n==========================================\n";
 	cout << "\tRegistro medico y paciente:";
-	cout << "\n===========================================\n";
+	cout << "\n==========================================\n";
 	imprimir(listaDoctor);
-	cout << "\n===========================================\n";
-
-	cout << "\n===========================================\n";
-	cout << "\tRegistro de medicamento disponible:";
-	cout << "\n===========================================\n";
-	// imprimir();
-	cout << "\n===========================================\n";
-	
-	cout << "\n===========================================\n";
-	cout << "\tRegistro de camas disponibles en el hospital:";
-	cout << "\n===========================================\n";
-	// imprimir();
-	cout << "\n===========================================\n";
-
-	cout << "\n===========================================\n";
-	cout << "\tRegistro de medicamento disponible:";
-	cout << "\n===========================================\n";
-	// imprimir();
-	cout << "\n===========================================\n";
+	cout << "\n==========================================\n";
 	cout << endl;
 
 	return 0;
